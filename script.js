@@ -1,16 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- Initialize AOS (Animate on Scroll) ---
+    // --- Initialize AOS ---
     AOS.init({
         duration: 800,
         once: true,
     });
 
     // --- Initialize LightGallery ---
-    lightGallery(document.getElementById('lightgallery'), {
-        speed: 500,
-        download: false
-    });
+    if (document.getElementById('lightgallery')) {
+        lightGallery(document.getElementById('lightgallery'), {
+            speed: 500,
+            download: false
+        });
+    }
 
     // --- Hall of Fame Scroller ---
     const scroller = document.getElementById('hall-of-fame-scroller');
@@ -75,14 +77,14 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.closePath();
             ctx.fillStyle = '#FFB7C5';
             ctx.fill();
-        }
+        };
 
         Petal.prototype.update = function() {
             this.x += this.xSpeed;
             this.y += this.ySpeed;
             this.flip += this.flipSpeed;
             this.draw();
-        }
+        };
 
         function createPetals() {
             petals = [];
@@ -93,13 +95,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            petals.forEach(petal => {
-                petal.update();
-            });
+            petals.forEach(petal => petal.update());
             requestAnimationFrame(animate);
         }
 
         createPetals();
         animate();
     }
+
+    // ====================== BACKGROUND MUSIC ======================
+    const audio = document.getElementById('bg-music');
+    let isPlaying = false;
+
+    window.toggleMusic = function() {
+        if (!audio) return;
+
+        if (isPlaying) {
+            audio.pause();
+            document.getElementById('music-icon').textContent = '▶️';
+            document.getElementById('music-text').textContent = 'Play Music';
+        } else {
+            audio.play().catch(() => console.log("Playback prevented"));
+            document.getElementById('music-icon').textContent = '⏸️';
+            document.getElementById('music-text').textContent = 'Pause Music';
+        }
+        isPlaying = !isPlaying;
+    };
 });
