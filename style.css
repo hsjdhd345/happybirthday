@@ -65,4 +65,8 @@ body {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+.glow {
+    box-shadow: 0 0 25px rgba(236, 72, 153, 0.6),
+                0 0 40px rgba(236, 72, 153, 0.4);
+}
 

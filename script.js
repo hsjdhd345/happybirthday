@@ -122,3 +122,35 @@ document.addEventListener('DOMContentLoaded', function() {
         isPlaying = !isPlaying;
     };
 });
+// Floating Bouncing Music Button with Glow + Slower Speed
+function makeButtonFloat() {
+    const btn = document.getElementById('floating-music');
+    if (!btn) return;
+
+    let x = Math.random() * (window.innerWidth - 220);
+    let y = Math.random() * (window.innerHeight - 120);
+    let xSpeed = 1.8;   // Slower
+    let ySpeed = 1.6;   // Slower
+
+    function animate() {
+        x += xSpeed;
+        y += ySpeed;
+
+        // Bounce on walls
+        if (x + 220 > window.innerWidth || x < 0) xSpeed *= -1;
+        if (y + 120 > window.innerHeight || y < 0) ySpeed *= -1;
+
+        btn.style.left = x + 'px';
+        btn.style.top = y + 'px';
+
+        requestAnimationFrame(animate);
+    }
+
+    btn.style.position = 'fixed';
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
+    animate();
+}
+
+// Call after page loads
+window.addEventListener('load', makeButtonFloat);
